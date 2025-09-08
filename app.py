@@ -9,6 +9,7 @@ def hello():
       <p>Hey there,</p>
       <p>welcome to website deployed using a CI/CD pipeline.</p>
       <p>Thanks,<br>Sumit</p>
+      
 
     </body></html>
     """
