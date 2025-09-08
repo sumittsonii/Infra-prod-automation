@@ -14,19 +14,22 @@ env:
   WIF_PROVIDER: ${{ vars.WIF_POOL_PROVIDER }}
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
+      id-token: write    # needed for OIDC
+      contents: read     # needed to checkout code
 
-      - uses: google-github-actions/auth@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud (OIDC)
+        uses: google-github-actions/auth@v2
         with:
-          token_format: access_token
-          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
-          service_account: ${{ vars.SERVICE_ACCOUNT_EMAIL }}
+          token_format: "access_token"
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT_EMAIL }}
 
       - uses: google-github-actions/setup-gcloud@v2
 
