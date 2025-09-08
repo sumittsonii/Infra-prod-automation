@@ -1,16 +1,17 @@
 name: Build & Push to Artifact Registry (Hardened)
+
 on:
   push:
     branches: [ "main" ]
   workflow_dispatch: {}
 
 env:
-  PROJECT_ID: github-automation-470314
-  GAR_LOCATION: asia-south1
-  REPO_NAME: apps
-  IMAGE_NAME: ifra-build-deploy
-  SERVICE_ACCOUNT_EMAIL: gh-actions-ar-writer@github-automation-470314.iam.gserviceaccount.com
-  WIF_PROVIDER: projects/755744988797/locations/global/workloadIdentityPools/github-oidc-pool/providers/github-provider
+  PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+  GAR_LOCATION: ${{ vars.GAR_LOCATION }}
+  REPO_NAME: ${{ vars.REPO_NAME }}
+  IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+  SERVICE_ACCOUNT_EMAIL: ${{ vars.SERVICE_ACCOUNT_EMAIL }}
+  WIF_PROVIDER: ${{ vars.WIF_POOL_PROVIDER }}
 
 jobs:
   build:
