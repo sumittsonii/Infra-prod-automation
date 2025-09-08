@@ -9,9 +9,9 @@ env:
   PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
   GAR_LOCATION: ${{ vars.GAR_LOCATION }}
   REPO_NAME: ${{ vars.REPO_NAME }}
-  IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+  IMAGE_NAME: ${{ vars.IMG_NAME2 }}
   SERVICE_ACCOUNT_EMAIL: ${{ vars.SERVICE_ACCOUNT_EMAIL }}
-  WIF_PROVIDER: projects/755744988797/locations/global/workloadIdentityPools/github-oidc-pool/providers/github-provider
+  WIF_PROVIDER: ${{ vars.WIF_POOL_PROVIDER }}
 
 jobs:
   build-and-push:
