@@ -1,0 +1,13 @@
+{
+  "displayName": "Cloud Run 5xx error rate > 2%",
+  "combiner": "OR",
+  "conditions": [
+    {
+      "displayName": "5xx rate",
+      "conditionMonitoringQueryLanguage": {
+        "duration": "300s",
+        "query": "fetch cloud_run_revision | metric 'run.googleapis.com/request_count' | group_by 5m, [ok: sum(if (metric.response_code_class == '2xx', value.request_count, 0)), err: sum(if (metric.response_code_class == '5xx', value.request_count, 0))] | value (err / (ok + err)) | filter val() > 0.02"
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "displayName": "Cloud Run HTTP Uptime - ifra-build-deploy",
+  "combiner": "OR",
+  "conditions": [
+    {
+      "displayName": "Uptime check failed",
+      "conditionMonitoringQueryLanguage": {
+        "duration": "300s",
+        "query": "fetch uptime_url | filter metric.check_passed == false | group_by 5m, [x: aggregate(any(value.check_passed))] | filter val(0) == true"
+      }
+    }
+  ]
+}

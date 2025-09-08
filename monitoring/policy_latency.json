@@ -1,0 +1,13 @@
+{
+  "displayName": "Cloud Run P95 latency > 1s",
+  "combiner": "OR",
+  "conditions": [
+    {
+      "displayName": "P95 latency high",
+      "conditionMonitoringQueryLanguage": {
+        "duration": "300s",
+        "query": "fetch cloud_run_revision | metric 'run.googleapis.com/request_latencies' | group_by [metric.response_code_class], [p95_latency: percentile(value.latency, 95)] | filter p95_latency > 1s"
+      }
+    }
+  ]
+}
