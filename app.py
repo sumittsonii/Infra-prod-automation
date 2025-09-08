@@ -7,7 +7,7 @@ app = Flask(__name__)
 def hello():
     return """
     <!doctype html>
-    <html><body style="font-family:system-ui, -apple-system, Segoe UI, Roboto, 
+    <html><body style="font-family:system-ui, -apple-system, Segoe UI, Roboto,
     sans-serif; line-height:1.5; padding:2rem;">
       <p>Hey there,</p>
       <p>welcome to website deployed using a CI/CD pipeline.</p>
