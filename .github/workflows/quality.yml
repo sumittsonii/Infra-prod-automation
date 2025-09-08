@@ -1,8 +1,8 @@
 name: PR Quality Gate
+
 on:
   pull_request:
     branches: [ "main" ]
-    
 
 jobs:
   quality:
@@ -16,18 +16,21 @@ jobs:
       COVERAGE_FAIL_UNDER: "80"
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-      - name: Install dev deps
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements-dev.txt
-      - name: Lint (flake8) + Security lint (bandit)
-        run: |
-          flake8 .
-          bandit -r . -x tests || true
-      - name: Unit tests + Coverage
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Lint with flake8
+        run: flake8 .
+
+      - name: Security scan with bandit
+        run: bandit -r . -x tests || true
+
+      - name: Run tests with coverage
         run: |
           pytest --maxfail=1 --disable-warnings -q --cov=. --cov-report=xml
           python - <<'PY'
@@ -38,11 +41,13 @@ jobs:
           print(f"Coverage: {rate:.1f}% (threshold {thr}%)")
           sys.exit(0 if rate>=thr else 1)
           PY
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN:  ${{ secrets.SONAR_TOKEN }}
+
       - uses: actions/upload-artifact@v4
         with:
           name: coverage-xml
