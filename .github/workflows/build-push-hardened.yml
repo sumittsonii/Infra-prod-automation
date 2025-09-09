@@ -9,7 +9,7 @@ env:
   PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
   GAR_LOCATION: ${{ vars.GAR_LOCATION }}
   REPO_NAME: ${{ vars.REPO_NAME }}
-  IMAGE_NAME: ${{ vars.IMG_NAME }}
+  IMAGE_NAME: ${{ vars.IMAGE_NAME }}
   SERVICE_ACCOUNT_EMAIL: ${{ vars.SERVICE_ACCOUNT_EMAIL }}
   WIF_PROVIDER: ${{ vars.WIF_POOL_PROVIDER }}
 
