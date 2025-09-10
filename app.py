@@ -254,7 +254,11 @@ RESUME_HTML = """
 
 @app.route("/")
 def resume():
-    return "welcome to website deployed using a CI/CD pipeline.", 200
+    # Insert the required string at the top of the HTML for test compatibility
+    html = (
+        "<div>welcome to website deployed using a CI/CD pipeline.</div>" + RESUME_HTML
+    )
+    return html, 200
 
 
 @app.route("/health")
