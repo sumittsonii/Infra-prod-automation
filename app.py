@@ -127,7 +127,10 @@ RESUME_HTML = """
 
         <div>
             <div class='section-title'>Professional Summary</div>
-            <p>GCP Cloud Engineer with 4+ years of IT experience, transitioning from .NET development to cloud engineering. Skilled in Kubernetes, IAM, CI/CD (GitHub Actions, Git, Helm, ArgoCD), and cloud observability tools (Datadog, Splunk, PagerDuty, BigPanda). Hands-on expertise in infrastructure automation, monitoring, and client-facing collaboration. Certified Google Cloud Professional Cloud Architect and Microsoft Azure Fundamentals (AZ-900). Passionate about designing cloud-native solutions, system optimization, and enhancing platform reliability.</p>
+            <p>GCP Cloud Engineer with 4+ years of IT experience, transitioning from .NET development to cloud engineering.
+            Skilled in Kubernetes, IAM, CI/CD (GitHub Actions, Git, Helm, ArgoCD), and cloud observability tools (Datadog, Splunk, PagerDuty, BigPanda).
+            Hands-on expertise in infrastructure automation, monitoring, and client-facing collaboration. Certified Google Cloud Professional Cloud Architect and Microsoft Azure Fundamentals (AZ-900).
+            Passionate about designing cloud-native solutions, system optimization, and enhancing platform reliability.</p>
         </div>
 
         <div>
@@ -163,7 +166,8 @@ RESUME_HTML = """
         <div>
             <div class='section-title'>Professional Experience</div>
             <div class='exp-role'>Software Engineer</div>
-            <span class='exp-company'>LTIMindtree</span> <span class='exp-date'>| Aug 2021 – Present | Navi Mumbai, Maharashtra</span>
+            <span class='exp-company'>LTIMindtree</span>
+            <span class='exp-date'>| Aug 2021 – Present | Navi Mumbai, Maharashtra</span>
             <ul>
                 <li>Serve as GCP Cloud Engineer specializing in infrastructure automation, DevOps, observability,
                     and cloud-native solutions.</li>
