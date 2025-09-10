@@ -1,0 +1,141 @@
+name: Provision + Deploy to GKE
+
+on:
+  workflow_run:
+    workflows: ["Build & Push to Artifact Registry"]   # must match your build workflow name
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      force_recreate:
+        description: "Delete and recreate cluster? (YES/NO)"
+        required: false
+        default: "NO"
+
+jobs:
+  deploy:
+    # auto-run only if the build workflow succeeded
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    env:
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      GAR_LOCATION: ${{ vars.GAR_LOCATION }}
+      REPO_NAME: ${{ vars.REPO_NAME }}
+      IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+      SERVICE_ACCOUNT_EMAIL: ${{ vars.SERVICE_ACCOUNT_EMAIL }}
+      WIF_PROVIDER: ${{ vars.WIF_POOL_PROVIDER }}
+      GKE_CLUSTER: ${{ vars.GKE_CLUSTER }}
+      GKE_LOCATION: ${{ vars.GKE_LOCATION }}
+      K8S_NAMESPACE: ${{ vars.K8S_NAMESPACE }}
+
+    steps:
+      - name: Authenticate to Google Cloud (OIDC)
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: access_token
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Set up gcloud + kubectl + GKE auth plugin
+        uses: google-github-actions/setup-gcloud@v2
+      - run: |
+          gcloud --quiet components install gke-gcloud-auth-plugin kubectl || true
+          echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
+
+      - name: Enable GKE API (idempotent)
+        run: gcloud services enable container.googleapis.com --project "$PROJECT_ID"
+
+      - name: Create or recreate Autopilot cluster
+        shell: bash
+        run: |
+          set -e
+          if [ "${{ github.event.inputs.force_recreate || 'NO' }}" = "YES" ]; then
+            echo "Force deleting cluster $GKE_CLUSTER (if exists)..."
+            gcloud container clusters delete "$GKE_CLUSTER" \
+              --region "$GKE_LOCATION" --project "$PROJECT_ID" --quiet || true
+          fi
+
+          echo "Checking if cluster exists..."
+          if gcloud container clusters describe "$GKE_CLUSTER" --region "$GKE_LOCATION" --project "$PROJECT_ID" >/dev/null 2>&1; then
+            echo "Cluster exists."
+          else
+            echo "Creating Autopilot cluster: $GKE_CLUSTER"
+            gcloud container clusters create-auto "$GKE_CLUSTER" \
+              --region "$GKE_LOCATION" --project "$PROJECT_ID"
+          fi
+
+      - name: Get GKE credentials
+        run: gcloud container clusters get-credentials "$GKE_CLUSTER" --region "$GKE_LOCATION" --project "$PROJECT_ID"
+
+      - name: Deploy to GKE (Deployment + LoadBalancer Service)
+        shell: bash
+        run: |
+          set -e
+
+          # Use the same image SHA that the build workflow pushed; fallback to :latest if manual run
+          IMAGE_SHA="${{ github.event.workflow_run.head_sha || github.sha }}"
+          IMAGE="${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:${IMAGE_SHA}"
+
+          # Namespace
+          kubectl create namespace "$K8S_NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
+
+          # K8s manifest
+          cat > k8s.yaml <<EOF
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: ifra-build-deploy
+            namespace: ${K8S_NAMESPACE}
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: ifra-build-deploy
+            template:
+              metadata:
+                labels:
+                  app: ifra-build-deploy
+              spec:
+                containers:
+                  - name: app
+                    image: ${IMAGE}
+                    ports:
+                      - containerPort: 8080
+                    readinessProbe:
+                      httpGet:
+                        path: /
+                        port: 8080
+                      initialDelaySeconds: 3
+                      periodSeconds: 5
+          ---
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: ifra-build-deploy
+            namespace: ${K8S_NAMESPACE}
+          spec:
+            type: LoadBalancer
+            selector:
+              app: ifra-build-deploy
+            ports:
+              - name: http
+                port: 80
+                targetPort: 8080
+          EOF
+
+          kubectl apply -f k8s.yaml
+          kubectl rollout status deployment/ifra-build-deploy -n "$K8S_NAMESPACE" --timeout=180s || true
+
+      - name: Print external IP
+        shell: bash
+        run: |
+          echo "Waiting for LoadBalancer external IP..."
+          for i in {1..30}; do
+            IP=$(kubectl get svc ifra-build-deploy -n "$K8S_NAMESPACE" -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || true)
+            [ -n "$IP" ] && echo "App will be available at: http://$IP" && exit 0
+            sleep 10
+          done
+          echo "::warning::External IP not ready yet. Check later with: kubectl get svc ifra-build-deploy -n $K8S_NAMESPACE"
