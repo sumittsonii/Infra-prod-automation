@@ -80,6 +80,7 @@ jobs:
           IMAGE="${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:${IMAGE_SHA}"
 
           # Namespace
+          K8S_NAMESPACE=$(echo "$K8S_NAMESPACE" | tr -d '\r\n' | xargs)
           kubectl create namespace "$K8S_NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
 
           # K8s manifest
