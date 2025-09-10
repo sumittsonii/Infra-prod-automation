@@ -1,4 +1,4 @@
-from flask import Flask, render_template_string
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -9,8 +9,10 @@ RESUME_HTML = """
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Sumit Amitkumar Soni - Resume</title>
-    <link href='https://fonts.googleapis.com/css?family=Montserrat:700,400|Roboto:400,300' rel='stylesheet'>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:700,400|Roboto:400,300'
+        rel='stylesheet'>
+    <link rel='stylesheet'
+        href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
     <style>
         body {
             background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
@@ -112,7 +114,14 @@ RESUME_HTML = """
         <div class='header'>
             <h1>Sumit Amitkumar Soni</h1>
             <div class='contact'>
-                Navi Mumbai, Maharashtra &nbsp;|&nbsp; <a href='mailto:sumit.a.soni2001@gmail.com'><i class='fa fa-envelope'></i> sumit.a.soni2001@gmail.com</a> &nbsp;|&nbsp; <i class='fa fa-phone'></i> +91 8850070610 &nbsp;|&nbsp; <a href='https://www.linkedin.com/in/sumit-s-030717116' target='_blank'><i class='fab fa-linkedin'></i> LinkedIn</a>
+                Navi Mumbai, Maharashtra &nbsp;|&nbsp;
+                <a href='mailto:sumit.a.soni2001@gmail.com'>
+                    <i class='fa fa-envelope'></i> sumit.a.soni2001@gmail.com
+                </a> &nbsp;|&nbsp;
+                <i class='fa fa-phone'></i> +91 8850070610 &nbsp;|&nbsp;
+                <a href='https://www.linkedin.com/in/sumit-s-030717116' target='_blank'>
+                    <i class='fab fa-linkedin'></i> LinkedIn
+                </a>
             </div>
         </div>
 
@@ -156,19 +165,28 @@ RESUME_HTML = """
             <div class='exp-role'>Software Engineer</div>
             <span class='exp-company'>LTIMindtree</span> <span class='exp-date'>| Aug 2021 – Present | Navi Mumbai, Maharashtra</span>
             <ul>
-                <li>Serve as GCP Cloud Engineer specializing in infrastructure automation, DevOps, observability, and cloud-native solutions.</li>
-                <li>Manage Kubernetes clusters on GCP: handling pods, logs, monitoring, and enforcing IAM policies for secure access control.</li>
-                <li>Build and maintain CI/CD pipelines using GitHub Actions, Helm, and ArgoCD, improving deployment efficiency.</li>
-                <li>Led incident management and system monitoring with Datadog, Splunk, PagerDuty, BigPanda, reducing downtime.</li>
-                <li>Collaborated with cross-functional teams to optimize cloud operations and resolve production issues quickly.</li>
+                <li>Serve as GCP Cloud Engineer specializing in infrastructure automation, DevOps, observability,
+                    and cloud-native solutions.</li>
+                <li>Manage Kubernetes clusters on GCP: handling pods, logs, monitoring,
+                    and enforcing IAM policies for secure access control.</li>
+                <li>Build and maintain CI/CD pipelines using GitHub Actions, Helm, and ArgoCD,
+                    improving deployment efficiency.</li>
+                <li>Led incident management and system monitoring with Datadog, Splunk, PagerDuty, BigPanda,
+                    reducing downtime.</li>
+                <li>Collaborated with cross-functional teams to optimize cloud operations
+                    and resolve production issues quickly.</li>
             </ul>
             <div class='achievements'>
                 <strong>Key Achievements:</strong>
                 <ul>
-                    <li>Built advanced Datadog monitors, dashboards, and synthetics to improve performance visibility.</li>
-                    <li>Designed Service Level Objectives (SLOs) and Event Logging Operations (ELOs) to strengthen reliability.</li>
-                    <li>Investigated and optimized SQL database performance, integrating custom metrics.</li>
-                    <li>Automated recurring reporting and monitoring tasks, saving significant engineering hours.</li>
+                    <li>Built advanced Datadog monitors, dashboards, and synthetics
+                        to improve performance visibility.</li>
+                    <li>Designed Service Level Objectives (SLOs) and Event Logging Operations (ELOs)
+                        to strengthen reliability.</li>
+                    <li>Investigated and optimized SQL database performance,
+                        integrating custom metrics.</li>
+                    <li>Automated recurring reporting and monitoring tasks,
+                        saving significant engineering hours.</li>
                 </ul>
             </div>
         </div>
@@ -203,10 +221,11 @@ RESUME_HTML = """
             <div class='section-title'>Projects</div>
             <ul class='projects-list'>
                 <li><strong>CI/CD Automation on GCP</strong> – Designed GitHub Actions pipelines integrated with GCP Artifact Registry and GKE,<br>
-                reducing release cycle times by 40%.</li>
+                    reducing release cycle times by 40%.</li>
                 <li><strong>Cloud Monitoring Dashboards</strong> – Built Datadog dashboards and alerts to track real-time resource utilization,<br>
-                enabling proactive scaling and cost savings.</li>
-                <li><strong>Infrastructure Optimization</strong> – Automated Kubernetes resource scaling and IAM policy management,<br>improving both security and cost efficiency.</li>
+                    enabling proactive scaling and cost savings.</li>
+                <li><strong>Infrastructure Optimization</strong> – Automated Kubernetes resource scaling and IAM policy management,<br>
+                    improving both security and cost efficiency.</li>
             </ul>
         </div>
     </div>
@@ -214,9 +233,11 @@ RESUME_HTML = """
 </html>
 """
 
+
 @app.route("/health")
 def health():
     return "OK", 200
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
