@@ -145,6 +145,7 @@ RESUME_HTML = """
             <ul class='skills-list'>
                 <li>Google Cloud Platform (GCP)</li>
                 <li>Microsoft Azure</li>
+                <li>AI Prompt Engineering</li>
                 <li>Kubernetes</li>
                 <li>Docker</li>
                 <li>Git</li>
