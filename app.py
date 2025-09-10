@@ -157,7 +157,6 @@ RESUME_HTML = """
                 <li>PagerDuty</li>
                 <li>BigPanda</li>
                 <li>Python</li>
-                <li>Shell</li>
                 <li>Terraform</li>
                 <li>YAML</li>
                 <li>Jira</li>
