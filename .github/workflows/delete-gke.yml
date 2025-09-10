@@ -1,0 +1,32 @@
+name: Delete on GKE
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Type DELETE to confirm"
+        required: true
+        default: "NO"
+jobs:
+  delete:
+    if: ${{ github.event.inputs.confirm == 'DELETE' }}
+    runs-on: ubuntu-latest
+    permissions: { id-token: write, contents: read }
+    env:
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      SERVICE_ACCOUNT_EMAIL: ${{ vars.SERVICE_ACCOUNT_EMAIL }}
+      WIF_PROVIDER: ${{ vars.WIF_POOL_PROVIDER }}
+      GKE_CLUSTER: ${{ vars.GKE_CLUSTER }}
+      GKE_LOCATION: ${{ vars.GKE_LOCATION }}
+      K8S_NAMESPACE: ${{ vars.K8S_NAMESPACE }}
+    steps:
+      - uses: google-github-actions/auth@v2
+        with:
+          token_format: access_token
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT_EMAIL }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - run: gcloud --quiet components install gke-gcloud-auth-plugin kubectl || true
+      - run: echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
+      - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --region "$GKE_LOCATION" --project "$PROJECT_ID"
+      - name: Delete namespace resources (idempotent)
+        run: kubectl delete deploy,svc -n "$K8S_NAMESPACE" --all --ignore-not-found
