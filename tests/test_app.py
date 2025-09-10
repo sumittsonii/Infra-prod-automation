@@ -13,7 +13,7 @@ def test_health_route():
     response = tester.get("/health")
     assert response.status_code == 200
     assert b"OK" in response.data
-    
+
 
 def test_not_found_route():
     tester = app.test_client()
