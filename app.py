@@ -1,6 +1,3 @@
-@app.route("/")
-def resume():
-    return RESUME_HTML, 200
 from flask import Flask
 
 app = Flask(__name__)
@@ -254,7 +251,10 @@ RESUME_HTML = """
 </html>
 """
 
-
+@app.route("/")
+def resume():
+    return RESUME_HTML, 200
+    
 @app.route("/health")
 def health():
     return "OK", 200
