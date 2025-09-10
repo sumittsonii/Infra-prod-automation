@@ -127,10 +127,14 @@ RESUME_HTML = """
 
         <div>
             <div class='section-title'>Professional Summary</div>
-            <p>GCP Cloud Engineer with 4+ years of IT experience, transitioning from .NET development to cloud engineering.
-            Skilled in Kubernetes, IAM, CI/CD (GitHub Actions, Git, Helm, ArgoCD), and cloud observability tools (Datadog, Splunk, PagerDuty, BigPanda).
-            Hands-on expertise in infrastructure automation, monitoring, and client-facing collaboration. Certified Google Cloud Professional Cloud Architect and Microsoft Azure Fundamentals (AZ-900).
-            Passionate about designing cloud-native solutions, system optimization, and enhancing platform reliability.</p>
+            <p>GCP Cloud Engineer with 4+ years of IT experience,
+            transitioning from .NET development to cloud engineering.
+            Skilled in Kubernetes, IAM, CI/CD (GitHub Actions, Git, Helm, ArgoCD),
+            and cloud observability tools (Datadog, Splunk, PagerDuty, BigPanda).
+            Hands-on expertise in infrastructure automation, monitoring, and client-facing collaboration.
+            Certified Google Cloud Professional Cloud Architect and Microsoft Azure Fundamentals (AZ-900).
+            Passionate about designing cloud-native solutions, system optimization,
+            and enhancing platform reliability.</p>
         </div>
 
         <div>
@@ -169,14 +173,14 @@ RESUME_HTML = """
             <span class='exp-company'>LTIMindtree</span>
             <span class='exp-date'>| Aug 2021 – Present | Navi Mumbai, Maharashtra</span>
             <ul>
-                <li>Serve as GCP Cloud Engineer specializing in infrastructure automation, DevOps, observability,
-                    and cloud-native solutions.</li>
+                <li>Serve as GCP Cloud Engineer specializing in infrastructure automation, DevOps,
+                observability and cloud-native solutions.</li>
                 <li>Manage Kubernetes clusters on GCP: handling pods, logs, monitoring,
                     and enforcing IAM policies for secure access control.</li>
                 <li>Build and maintain CI/CD pipelines using GitHub Actions, Helm, and ArgoCD,
                     improving deployment efficiency.</li>
-                <li>Led incident management and system monitoring with Datadog, Splunk, PagerDuty, BigPanda,
-                    reducing downtime.</li>
+                <li>Led incident management and system monitoring with Datadog, Splunk,
+                PagerDuty, BigPanda, reducing downtime.</li>
                 <li>Collaborated with cross-functional teams to optimize cloud operations
                     and resolve production issues quickly.</li>
             </ul>
@@ -198,8 +202,10 @@ RESUME_HTML = """
         <div>
             <div class='section-title'>Education</div>
             <ul class='education'>
-                <li>Master of Technology (M.Tech) in Software Systems – BITS Pilani (Work Integrated Learning), 2021 – 2025</li>
-                <li>Bachelor of Science (B.Sc.) in Information Technology – SIES College of Management Studies, 2018 – 2021<br>GPA: 9.00/10</li>
+                <li>Master of Technology (M.Tech) in Software Systems
+                – BITS Pilani (Work Integrated Learning), 2021 – 2025</li>
+                <li>Bachelor of Science (B.Sc.) in Information Technology
+                – SIES College of Management Studies, 2018 – 2021<br>GPA: 9.00/10</li>
             </ul>
         </div>
 
@@ -207,7 +213,8 @@ RESUME_HTML = """
             <div class='section-title'>Certifications</div>
             <ul class='cert-list'>
                 <li>Google Cloud Professional Cloud Architect – Google (Issued Sep 2025)</li>
-                <li>Microsoft Certified: Azure Fundamentals (AZ-900) – Microsoft (Issued Feb 2022)</li>
+                <li>Microsoft Certified: Azure Fundamentals (AZ-900)
+                – Microsoft (Issued Feb 2022)</li>
                 <li>Datadog 101: Developer – Datadog (Issued Jul 2023)</li>
                 <li>Datadog Foundation – Datadog (Issued Jul 2023)</li>
                 <li>Datadog Introduction to Observability – Datadog (Issued Jul 2023)</li>
@@ -224,13 +231,16 @@ RESUME_HTML = """
         <div>
             <div class='section-title'>Projects</div>
             <ul class='projects-list'>
-                <li><strong>CI/CD Automation on GCP</strong> – Designed GitHub Actions pipelines integrated with GCP Artifact Registry
+                <li><strong>CI/CD Automation on GCP</strong>
+                – Designed GitHub Actions pipelines integrated with GCP Artifact Registry
                     and GKE,<br>
                     reducing release cycle times by 40%.</li>
-                <li><strong>Cloud Monitoring Dashboards</strong> – Built Datadog dashboards and alerts to track real-time resource
+                <li><strong>Cloud Monitoring Dashboards</strong>
+                – Built Datadog dashboards and alerts to track real-time resource
                     utilization,<br>
                     enabling proactive scaling and cost savings.</li>
-                <li><strong>Infrastructure Optimization</strong> – Automated Kubernetes resource scaling and IAM policy management,<br>
+                <li><strong>Infrastructure Optimization</strong>
+                – Automated Kubernetes resource scaling and IAM policy management,<br>
                     improving both security and cost efficiency.</li>
             </ul>
         </div>
