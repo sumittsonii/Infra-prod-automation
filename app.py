@@ -220,9 +220,11 @@ RESUME_HTML = """
         <div>
             <div class='section-title'>Projects</div>
             <ul class='projects-list'>
-                <li><strong>CI/CD Automation on GCP</strong> – Designed GitHub Actions pipelines integrated with GCP Artifact Registry and GKE,<br>
+                <li><strong>CI/CD Automation on GCP</strong> – Designed GitHub Actions pipelines integrated with GCP Artifact Registry
+                    and GKE,<br>
                     reducing release cycle times by 40%.</li>
-                <li><strong>Cloud Monitoring Dashboards</strong> – Built Datadog dashboards and alerts to track real-time resource utilization,<br>
+                <li><strong>Cloud Monitoring Dashboards</strong> – Built Datadog dashboards and alerts to track real-time resource
+                    utilization,<br>
                     enabling proactive scaling and cost savings.</li>
                 <li><strong>Infrastructure Optimization</strong> – Automated Kubernetes resource scaling and IAM policy management,<br>
                     improving both security and cost efficiency.</li>
@@ -240,4 +242,7 @@ def health():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+    app.run(
+        host="0.0.0.0",
+        port=8080
+    )
