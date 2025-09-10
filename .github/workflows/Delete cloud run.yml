@@ -1,0 +1,45 @@
+name: Delete Cloud Run Application
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Type DELETE to confirm"
+        required: true
+        default: "NO"
+
+jobs:
+  delete:
+    if: ${{ github.event.inputs.confirm == 'DELETE' }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    env:
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      SERVICE_ACCOUNT_EMAIL: ${{ vars.SERVICE_ACCOUNT_EMAIL }}
+      WIF_PROVIDER: ${{ vars.WIF_POOL_PROVIDER }}
+      RUN_SERVICE_NAME: ${{ vars.RUN_SERVICE_NAME }}
+      RUN_REGION: ${{ vars.RUN_REGION }}
+
+    steps:
+      - name: Auth to Google Cloud (OIDC)
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: "access_token"
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Delete Cloud Run service (idempotent)
+        run: |
+          set -e
+          if gcloud run services describe "$RUN_SERVICE_NAME" --region "$RUN_REGION" >/dev/null 2>&1; then
+            gcloud run services delete "$RUN_SERVICE_NAME" --region "$RUN_REGION" --quiet
+            echo "Deleted Cloud Run service: $RUN_SERVICE_NAME"
+          else
+            echo "Service '$RUN_SERVICE_NAME' not found; nothing to delete."
+          fi
