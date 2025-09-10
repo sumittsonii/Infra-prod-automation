@@ -131,8 +131,10 @@ RESUME_HTML = """
             transitioning from .NET development to cloud engineering.
             Skilled in Kubernetes, IAM, CI/CD (GitHub Actions, Git, Helm, ArgoCD),
             and cloud observability tools (Datadog, Splunk, PagerDuty, BigPanda).
-            Hands-on expertise in infrastructure automation, monitoring, and client-facing collaboration.
-            Certified Google Cloud Professional Cloud Architect and Microsoft Azure Fundamentals (AZ-900).
+            Hands-on expertise in infrastructure automation, monitoring,
+            and client-facing collaboration.
+            Certified Google Cloud Professional Cloud Architect
+            and Microsoft Azure Fundamentals (AZ-900).
             Passionate about designing cloud-native solutions, system optimization,
             and enhancing platform reliability.</p>
         </div>
