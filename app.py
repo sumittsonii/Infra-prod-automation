@@ -149,6 +149,7 @@ RESUME_HTML = """
                 <li>Kubernetes</li>
                 <li>Docker</li>
                 <li>Git</li>
+                <li>CI/CD DEvops</li>
                 <li>Helm</li>
                 <li>ArgoCD</li>
                 <li>GitHub Actions</li>
